@@ -2,7 +2,17 @@
 
 Specs:
 - [x] Using Ruby on Rails for the project
-- [ ] Include at least one has_many relationship (x has_many y; e.g. User has_many Recipes) 
+- [x] Include at least one has_many relationship (x has_many y; e.g. User has_many Recipes) 
+    - A User has_many Posts.
+    - A User has_many Subscriptions.
+    - A User has_many Followers.
+    - A User has_many Likes.
+    - A User has_many Comments.
+    - A Post has_many Likes.
+    - A Post has_many Comments.
+    - A Group has_many Subscriptions.
+    - A Group has_many Posts.
+
 - [ ] Include at least one belongs_to relationship (x belongs_to y; e.g. Post belongs_to User)
 - [ ] Include at least two has_many through relationships (x has_many y through z; e.g. Recipe has_many Items through Ingredients)
 - [ ] Include at least one many-to-many relationship (x has_many y through z, y has_many x through z; e.g. Recipe has_many Items through Ingredients, Item has_many Recipes through Ingredients)
