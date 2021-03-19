@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :groups, only: [:new, :edit, :create]
 
   resources :users, only: [:show] do
+    resources :posts, only: [:index]
     get '/followers' => 'followers#show'
     get '/following' => 'followers#show'
     get '/likes' => 'likes#show'
