@@ -4,4 +4,9 @@ Rails.application.routes.draw do
     resources :posts, only: [:new, :show]
   end
 
+  resources :users, only: [:show] do
+    get '/followers' => 'followers#show'
+    get '/following' => 'followers#show'
+    get '/likes' => 'likes#show'
+  end
 end
