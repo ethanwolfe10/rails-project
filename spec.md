@@ -12,8 +12,16 @@ Specs:
     - A Post has_many Comments.
     - A Group has_many Subscriptions.
     - A Group has_many Posts.
-
-- [ ] Include at least one belongs_to relationship (x belongs_to y; e.g. Post belongs_to User)
+- [x] Include at least one belongs_to relationship (x belongs_to y; e.g. Post belongs_to User)
+    - A Subscription belongs_to a User.
+    - A Subscription belongs_to a Group.
+    - A Post belongs_to a Group.
+    - A Post belongs_to a User.
+    - A Follower belongs_to a User.
+    - A Like belongs_to a User.
+    - A Like belongs_to a Post.
+    - A Comment belongs_to a User.
+    - A Comment belongs_to a Post.
 - [ ] Include at least two has_many through relationships (x has_many y through z; e.g. Recipe has_many Items through Ingredients)
 - [ ] Include at least one many-to-many relationship (x has_many y through z, y has_many x through z; e.g. Recipe has_many Items through Ingredients, Item has_many Recipes through Ingredients)
 - [ ] The "through" part of the has_many through includes at least one user submittable attribute, that is to say, some attribute other than its foreign keys that can be submitted by the app's user (attribute_name e.g. ingredients.quantity)
