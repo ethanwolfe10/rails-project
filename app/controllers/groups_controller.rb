@@ -7,6 +7,16 @@ class GroupsController < ApplicationController
     end
 
     def create
-        binding.pry
+        @group = Group.new(group_params)
+        if @group.save
+            @sub = Subscription.new(user_id: current_user.id, group_id: @group.id, moderator: true, confirmed: true)
+            @sub.save
+        end
+    end
+
+    private
+
+    def group_params
+        params.require(:group).permit(:name, :bio)
     end
 end
