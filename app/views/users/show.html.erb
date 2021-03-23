@@ -1,1 +1,16 @@
-<%= current_user.display_name %>
+
+<% @current_user.groups.each do |group| %>
+    <% if @current_user.groups.empty? %>
+        You are not subscribed to any groups!
+    <% else %>
+        <div>
+            <%= group.name %> <%= group.bio %>
+            <% group.users.each do |user| %>
+                <%= user.username %>
+            <% end %>
+        </div>
+    <% end %>
+<% end %>
+
+<%= button_to "Create Group", new_user_group_path(@current_user), method: :get %>
+<%= @current_user.followers.count %> <%= link_to "Followers", user_followers_path(@current_user) %>
