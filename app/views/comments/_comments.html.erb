@@ -1,0 +1,5 @@
+
+<% post_comments.each do |cmnt| %>
+    <%= cmnt.content %> by <%= creator?(cmnt).username %>
+    <br>
+<% end %>
