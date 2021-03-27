@@ -1,0 +1,6 @@
+<%= form_for current_user, url: edit_user_path(current_user) do |f| %>
+    Check the Checkbox to Follow
+    <br>
+    <%= f.collection_check_boxes :id, not_following?(current_user), :id, :username %>
+    <%= f.submit "Follow" %>
+<% end %>

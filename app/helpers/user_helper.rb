@@ -14,4 +14,12 @@ module UserHelper
     def invitations(user)
         Subscription.select(:group_id).where(["user_id = ? and confirmed = ?", user.id, false])
     end
+
+    def self.user_followers(user)
+        Following.find_by(id: user)
+    end
+
+    def not_following?(user)
+        User.where.not(id: user.follows.map(&:following_id)).select{|x| x[:id] != user.id}
+    end
 end
