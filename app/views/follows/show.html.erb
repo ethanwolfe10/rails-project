@@ -1,0 +1,6 @@
+<% binding.pry %>
+<%= @msg %><br>
+<% follower_collect(@user).each do |fllwr| %>
+    <%= link_to fllwr.username, user_path(fllwr) %>
+    <br>
+<% end %>
