@@ -1,5 +1,9 @@
 <%= creator?(@post).display_name %>
 <%= @post.title %>
 <%= @post.content %>
+<%= form_for @post, url: group_post_path(@post.group_id, @post.id), method: :patch do |f| %>
+    <%= @post.likes.size %> Likes <%= f.check_box :likes %>
+    <%= f.submit "Like Post" %>
+<% end %>
 <%= button_to "Add Comment", new_post_comment_path(@post), method: :get %>
 <%= render partial: "comments/comments", locals: {post_comments: @post.comments} %>

@@ -1,0 +1,10 @@
+<%= button_to "Create Post", new_group_post_path(@group), method: :get %>
+
+
+<% @group.posts.each do |post| %>
+    <%= link_to post.title, group_post_path(@group.id, post) %>
+    <%= post.content %>
+    <%= post.likes.size %> Likes
+    <br> 
+    <br> 
+<% end %>
