@@ -22,4 +22,12 @@ module UserHelper
     def not_following?(user)
         User.where.not(id: user.follows.map(&:following_id)).select{|x| x[:id] != user.id}
     end
+
+    def is_following?(user)
+        User.where(id: user.follows.map(&:following_id))
+    end
+
+    def potential_members?(user, group)
+        User.where(id: user.follows.map(&:following_id).select{|x| !group.users.include?(User.find(x))})
+    end
 end

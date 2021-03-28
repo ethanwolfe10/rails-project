@@ -1,5 +1,19 @@
 <%= button_to "Create Post", new_group_post_path(@group), method: :get %>
+<% if moderator?(current_user, @group.id) %>
+    <%= form_for current_user, url: user_group_path(current_user), method: :patch do |f| %>
+        <%= f.collection_check_boxes :id, potential_members?(current_user, @group), :id, :username %>
+        <%= f.submit "Add Members" %>
+    <% end %>
+<% end %>
 
+Current Members: 
+<% @group.subscriptions.each do |sub| %>
+    <% if sub.confirmed == true %>
+        <% group_users(sub).each do |user| %>
+            <%= user.username %>
+        <% end %>
+    <% end %>
+<% end %>
 
 <% @group.posts.each do |post| %>
     <%= link_to post.title, group_post_path(@group.id, post) %>

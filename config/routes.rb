@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:show] do
     resources :posts, only: [:index, :edit, :update]
-    resources :groups, only: [:new, :edit, :create]
+    resources :groups, only: [:new, :edit, :create, :update]
     get '/followers' => 'follows#show'
     get '/following' => 'follows#show'
     get '/followers/add' => 'users#index'
