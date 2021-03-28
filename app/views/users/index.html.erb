@@ -1,4 +1,4 @@
-<%= form_for current_user, url: edit_user_path(current_user) do |f| %>
+<%= form_for current_user, url: user_followers_add_path(current_user), method: :patch do |f| %>
     Check the Checkbox to Follow
     <br>
     <%= f.collection_check_boxes :id, not_following?(current_user), :id, :username %>

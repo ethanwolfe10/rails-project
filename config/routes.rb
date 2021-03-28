@@ -6,17 +6,22 @@ Rails.application.routes.draw do
   }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :groups, only: [:show] do 
-    resources :posts, only: [:new, :show, :create, :edit]
+    resources :posts, only: [:new, :show, :create]
   end
 
-  resources :groups, only: [:new, :edit, :create]
-
   resources :users, only: [:show] do
-    resources :posts, only: [:index]
-    get '/followers' => 'followers#show'
-    get '/following' => 'followers#show'
+    resources :posts, only: [:index, :edit]
+    resources :groups, only: [:new, :edit, :create]
+    get '/followers' => 'follows#show'
+    get '/following' => 'follows#show'
+    get '/followers/add' => 'users#index'
+    patch '/followers/add' => 'follows#add'
     get '/likes' => 'likes#show'
   end
 
-  resources :users, only: []
+  resources :posts, only: [:show] do
+    resources :comments, only: [:new, :create, :index]
+  end
+
+  resources :users, only: [:edit, :update]
 end
