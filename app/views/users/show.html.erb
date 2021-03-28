@@ -1,10 +1,14 @@
 <% if @user.id == current_user.id %>
     <%= button_to "Edit Profile", edit_user_path(@user), method: :get %>
 <% end %>
+
+
 <h2> Your Subscribed Groups: </h2>
 <% if @user.subscriptions.empty? %>
     You are not subscribed or invited to any groups!
 <% end %>
+
+
 <% @user.subscriptions.each do |sub| %>
     <% if sub.confirmed %>
         <div>
@@ -15,6 +19,8 @@
         </div>            
     <% end %>
 <% end %>
+
+
 <h2>Group Invitations: </h2>
 <% invitations(@user).each do |inv| %>
     <%= group_name inv %> <%= group_bio inv %>
@@ -23,6 +29,8 @@
     <% end %>
     <br>
 <% end %>
+
+
 <h2>All Posts: </h2>
 <% @user.posts.each do |post| %>
     <%= link_to post.title, group_post_path(post) %>
