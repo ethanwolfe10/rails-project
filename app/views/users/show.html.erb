@@ -1,12 +1,14 @@
-
+<% if @user.id == current_user.id %>
+    <%= button_to "Edit Profile", edit_user_path(@user), method: :get %>
+<% end %>
 <h2> Your Subscribed Groups: </h2>
-<% if @current_user.subscriptions.empty? %>
+<% if @user.subscriptions.empty? %>
     You are not subscribed or invited to any groups!
 <% end %>
-<% @current_user.subscriptions.each do |sub| %>
+<% @user.subscriptions.each do |sub| %>
     <% if sub.confirmed %>
         <div>
-            <%= group_name(sub) %> <%= group_bio(sub) %>
+            <%= link_to group_name(sub), group_path(sub.group_id)%> <%= group_bio(sub) %>
             Users: <% group_users(sub).each do |user| %>
                 <%= user.username %>
             <% end %>
@@ -14,13 +16,23 @@
     <% end %>
 <% end %>
 <h2>Group Invitations: </h2>
-<% invitations(@current_user).each do |inv| %>
+<% invitations(@user).each do |inv| %>
     <%= group_name inv %> <%= group_bio inv %>
     Users: <% group_users(inv).each do |user| %>
         <%= user.username %>
     <% end %>
     <br>
 <% end %>
+<h2>All Posts: </h2>
+<% @user.posts.each do |post| %>
+    <%= link_to post.title, group_post_path(post) %>
+    <%= post.content %>
+    <br>
+<% end %>
 
-<%= button_to "Create Group", new_user_group_path(@current_user), method: :get %>
-<%= @current_user.followers.count %> <%= link_to "Followers", user_followers_path(@current_user) %>
+<br>
+<%= button_to "Create Group", new_user_group_path(@user), method: :get %>
+<%= @user.follows.count %> <%= link_to "Following", user_followers_path(@user) %>
+<%= UserHelper.user_followers(@user).follows.count %> <%= link_to "Followers", user_followers_path(UserHelper.user_followers(@user), session[:follower] = true) %>
+or <%= button_to "Follow More", user_followers_add_path(@user), method: :get %>
+
