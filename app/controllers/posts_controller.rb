@@ -16,7 +16,29 @@ class PostsController < ApplicationController
         @post = Post.find_by(id: params[:id])
     end
 
+    def edit
+        if current_user.id != params[:user_id].to_i
+            redirect_to user_path(current_user)
+        else
+            @post = Post.find(params[:id])
+        end
+    end
+
     def update
+        @post = Post.find(params[:id])
+        #updating a posts title and content
+        if !params[:post][:title].blank? && !params[:post][:content].blank?
+            if @post.title != params[:post][:title]
+                @post.update(title: params[:post][:title] + " *EDITED*")
+            end
+            if @post.content != params[:post][:content]
+                @post.update(content: params[:post][:content] + " *EDITED*")
+            end
+            redirect_to group_post_path(@post.group_id, @post.id)
+        end
+            
+
+        #updating a posts likes 
         if params[:post][:likes]
             if !Like.find_by(user_id: current_user.id, post_id: params[:id])
                 Like.create(user_id: current_user.id, post_id: params[:id])
