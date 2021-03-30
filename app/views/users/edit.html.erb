@@ -1,7 +1,1 @@
-<%= form_for current_user, method: :patch do |f| %>
-    <%= f.label "Display Name" %>
-    <%= f.text_field :display_name, :value => current_user.display_name%>
-    <%= f.label "Bio" %>
-    <%= f.text_field :bio, :value => current_user.bio %>
-    <%= f.submit "Edit Profile" %>
-<% end %>
+<%= render 'edit' %>

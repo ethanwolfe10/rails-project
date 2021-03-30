@@ -1,7 +1,9 @@
 <% if @user.id == current_user.id %>
-    <%= button_to "Edit Profile", edit_user_path(@user), method: :get %>
     <% if @user.display_name == @user.username %>
-        *Click Here To Change Default Display Name*
+        <%= render 'edit' %>
+        *Your Display Name Has Been Defaulted to Your Username*
+    <% else %>
+        <%= button_to "Edit Profile", edit_user_path(@user), method: :get %>
     <% end %>
 <% end %>
 
