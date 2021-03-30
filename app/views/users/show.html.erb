@@ -37,15 +37,12 @@
 
 
 <h2>All Posts: </h2>
-<% @user.posts.each do |post| %>
-    <%= link_to post.title, group_post_path(post) %>
-    <%= post.content %>
-    <br>
-<% end %>
+<%= render 'posts/index', locals: {all_posts: @user.posts} %>
 
 <br>
 <%= button_to "Create Group", new_user_group_path(@user), method: :get %>
 <%= @user.follows.count %> <%= link_to "Following", user_followers_path(@user) %>
 <%= UserHelper.user_followers(@user).follows.count %> <%= link_to "Followers", user_followers_path(UserHelper.user_followers(@user), session[:follower] = true) %>
 or <%= button_to "Follow More", user_followers_add_path(@user), method: :get %>
+
 
