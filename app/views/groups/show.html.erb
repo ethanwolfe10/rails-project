@@ -9,22 +9,12 @@
         <%= f.submit "Add Members" %>
 
     <% end %>
-<% end %>
+<% end %>=-
 
 Current Members: 
 
-<% @group.subscriptions.each do |sub| %>
-
-    <% if sub.confirmed == true %>
-
-        <% group_users(sub).each do |user| %>
-
-            <%= user.username %>
-
-        <% end %>
-    <% end %>
-<% end %>
+<%= render partial: 'subscriptions/index', locals: {all_subs: @group.subscriptions}
 
 Feed: 
 
-<%= render partial: 'posts/index', {all_posts: @group.posts} %>
+<%= render partial: 'posts/index', locals: {all_posts: @group.posts} %>

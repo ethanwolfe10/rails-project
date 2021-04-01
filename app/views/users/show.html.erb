@@ -37,7 +37,7 @@
 
 
 <h2>All Posts: </h2>
-<%= render 'posts/index', locals: {all_posts: @user.posts} %>
+<%= render partial: 'posts/index', locals: {all_posts: @user.posts} %>
 
 <br>
 <%= button_to "Create Group", new_user_group_path(@user), method: :get %>

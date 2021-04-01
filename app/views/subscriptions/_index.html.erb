@@ -1,0 +1,7 @@
+<%= all_subs.each do |sub| %>
+    <% if sub.confirmed == true %>
+        <% group_users(sub).each do |user| %>
+            <%= user.username %>
+        <% end %>
+    <% end %>
+<% end %>
