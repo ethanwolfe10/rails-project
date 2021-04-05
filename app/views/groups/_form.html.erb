@@ -1,0 +1,7 @@
+<label> Group Name: </label>
+<%= text_field_tag :name, @group.name %><br>
+<label> Group Bio: </label>
+<%= text_area_tag :bio, @group.bio %><br>
+<label> Add Users: <label>
+<%= collection_check_boxes(:group, :id, potential_members?(current_user, @group), :id, :username) %><br>
+<%= submit_tag "Submit Group" %>

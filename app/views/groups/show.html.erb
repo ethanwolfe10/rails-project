@@ -1,20 +1,24 @@
 <%= button_to "Create Post", new_group_post_path(@group), method: :get %>
-
-
+Welcome to <%= @group.name %>!<br>
+Bio: <%= @group.bio %><br>
 <% if moderator?(current_user, @group.id) %>
 
-    <%= form_for current_user, url: user_group_path(current_user), method: :patch do |f| %>
+     Click Here to Edit Group Info!
+    <%= button_to "Edit Group", edit_group_path(@group), method: :get %>
 
-        <%= f.collection_check_boxes :id, potential_members?(current_user, @group), :id, :username %>
-        <%= f.submit "Add Members" %>
-
-    <% end %>
-<% end %>=-
+<% end %>
 
 Current Members: 
 
-<%= render partial: 'subscriptions/index', locals: {all_subs: @group.subscriptions}
+<%= render partial: 'subscriptions/index', locals: {all_subs: @group.subscriptions.where("confirmed == true")} %><br>
 
+Invited Members:
+
+<% invited_members(@group.subscriptions.where("confirmed == false")).each do |user| %>
+    <%= link_to user.username, url: user_path(user) %>
+<% end %>
+
+<br>
 Feed: 
 
 <%= render partial: 'posts/index', locals: {all_posts: @group.posts} %>
