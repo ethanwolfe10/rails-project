@@ -15,6 +15,10 @@ module UserHelper
         Subscription.select(:group_id).where(["user_id = ? and confirmed = ?", user.id, false])
     end
 
+    def invited_members(subs)
+        User.where(id: subs.map(&:user_id))
+    end
+
     def self.user_followers(user)
         Following.find_by(id: user)
     end
