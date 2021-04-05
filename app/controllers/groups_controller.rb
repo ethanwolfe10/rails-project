@@ -19,16 +19,24 @@ class GroupsController < ApplicationController
     end
 
     def edit
+        @group = Group.find(params[:id])
     end
 
     def update
         #update group members
-        params[:user][:id].each do |id|
-            if id != "" 
-                Subscription.create(user_id: id, group_id: params[:id], moderator: false, confirmed: false)
+        @group = Group.find_by(id: params[:id])
+        if params[:group][:id].size > 1
+            params[:group][:id].each do |id|
+                if id != "" 
+                    Subscription.create(user_id: id, group_id: @group.id, moderator: false, confirmed: false)
+                end
             end
+        elsif params[:name].blank? || params[:bio].blank?
+            redirect_to edit_group_path(@group), alert: "Fields Cannot Be Blank"
+        else
+            @group.update(name: params[:name], bio: params[:bio])
+            redirect_to group_path(@group)
         end
-        redirect_to group_path(params[:id])
     end
 
     private
