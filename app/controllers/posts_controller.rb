@@ -1,6 +1,10 @@
 class PostsController < ApplicationController
     def new
-        @post = Post.new(user_id: current_user.id, group_id: params[:group_id])
+        if confirmed?(current_user, params[:group_id])
+            @post = Post.new(user_id: current_user.id, group_id: params[:group_id])
+        else
+            redirect_to user_path(current_user), alert: "Must Confirm Subscription To Create Posts"
+        end
     end
 
     def create
@@ -27,7 +31,6 @@ class PostsController < ApplicationController
     def update
         @post = Post.find(params[:id])
         #updating a posts likes 
-        binding.pry
         if params[:commit] == "Unlike Post"
             Like.find_by(user_id: current_user.id, post_id: params[:id]).destroy
             redirect_to group_path(@post.group_id) and return
