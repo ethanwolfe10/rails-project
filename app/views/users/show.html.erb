@@ -1,43 +1,17 @@
 <% if @user.id == current_user.id %>
     <% if @user.display_name == @user.username %>
-        <%= render 'edit' %>
         *Your Display Name Has Been Defaulted to Your Username*
-    <% else %>
-        <%= button_to "Edit Profile", edit_user_path(@user), method: :get %>
     <% end %>
+    <%= button_to "Edit Profile", edit_user_path(@user), method: :get %>
 <% end %>
 
 
-<h2> Your Subscribed Groups: </h2>
-<% if @user.subscriptions.empty? %>
-    You are not subscribed or invited to any groups!
-<% end %>
-
-
-<% @user.subscriptions.each do |sub| %>
-    <% if sub.confirmed %>
-        <div>
-            <%= link_to group_name(sub), group_path(sub.group_id)%> <%= group_bio(sub) %>
-            Users: <% group_users(sub).each do |user| %>
-                <%= user.username %>
-            <% end %>
-        </div>            
-    <% end %>
-<% end %>
-
-
-<h2>Group Invitations: </h2>
-<% invitations(@user).each do |inv| %>
-    <%= group_name inv %> <%= group_bio inv %>
-    Users: <% group_users(inv).each do |user| %>
-        <%= user.username %>
-    <% end %>
-    <br>
-<% end %>
-
+<%= render partial: "subscriptions/index", locals: {subs: current_user.subscriptions} %>
 
 <h2>All Posts: </h2>
-<%= render partial: 'posts/index', locals: {all_posts: @user.posts} %>
+<% current_user.posts.each do |post| %>
+    <%= render partial: 'posts/show', locals: {post: post} %>
+<% end %>
 
 <br>
 <%= button_to "Create Group", new_user_group_path(@user), method: :get %>

@@ -25,6 +25,12 @@ class GroupsController < ApplicationController
     def update
         #update group members
         @group = Group.find_by(id: params[:id])
+        if params[:commit] == "Confirm Subscription"
+            subscription = Subscription.find_by(user_id: current_user.id, group_id: @group.id)
+            subscription.confirmed = true
+            subscription.save
+            redirect_to group_path(@group) and return
+        end
         if params[:group][:id].size > 1
             params[:group][:id].each do |id|
                 if id != "" 
