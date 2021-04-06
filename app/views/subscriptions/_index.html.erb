@@ -1,7 +1,25 @@
-<%= all_subs.each do |sub| %>
-    <% if sub.confirmed == true %>
-        <% group_users(sub).each do |user| %>
-            <%= user.username %>
+<% confirm_boolean = true %>
+<% invite_boolean = true %>
+
+<% subs.each do |sub| %>
+    <% if sub.confirmed %>
+        <% if confirm_boolean %>
+            Subscribed Groups: <br>
+            <% confirm_boolean = false %>
         <% end %>
+
+        <%= link_to group_info(sub).name, group_path(group_info(sub)) %><br>
+    
+    <% else %>
+
+        <% if invite_boolean %>
+            <br>Group Invitations: </br>
+            <% invite_boolean = false %>
+        <% end %>
+        <%= link_to group_info(sub).name, group_path(group_info(sub)) %> Invited by: <%= link_to group_moderator?(sub).first.username, user_path(group_moderator?(sub)) %><br>
+         
+
     <% end %>
 <% end %>
+
+

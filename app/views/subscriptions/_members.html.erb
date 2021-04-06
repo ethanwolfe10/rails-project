@@ -1,0 +1,30 @@
+<% confirm_boolean = true %>
+<% invite_boolean = true %>
+
+<% all_subs.each do |sub| %>
+
+    <% if sub.confirmed %>
+
+        <% if confirm_boolean %>
+
+            Confirmed Members: <br>
+            <% confirm_boolean = false %>
+
+        <% end %>
+
+        <%= link_to sub_to_user(sub).map(&:username).first, user_path(sub_to_user(sub).map(&:id).first) %><br>
+
+    <% else %>
+
+        <% if invite_boolean %>
+
+            Invited Members: <br>
+            <% invite_boolean = false %>
+
+        <% end %>
+
+        <%= link_to sub_to_user(sub).map(&:username).first, user_path(sub_to_user(sub).map(&:id).first) %> 
+        Invited By: <%= link_to group_moderator?(sub).first.username, user_path(group_moderator?(sub).first) %><br>
+
+    <% end %>
+<% end %>
