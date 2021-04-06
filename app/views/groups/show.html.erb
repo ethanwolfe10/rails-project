@@ -19,6 +19,8 @@ Invited Members:
 <% end %>
 
 <br>
-Feed: 
-
-<%= render partial: 'posts/index', locals: {all_posts: @group.posts} %>
+Feed:
+<br> 
+<% @group.posts.each do |post| %>
+    <%= render partial: 'posts/show', locals: {post: post} %>
+<% end %>

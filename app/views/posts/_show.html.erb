@@ -1,0 +1,29 @@
+<h1><%= link_to post.title, group_post_path(post) %></h1> By: <%= link_to creator?(post).username, user_path(creator?(post)) %><br>
+<%= post.content %>
+<br>
+
+<% if current_user != creator?(post) %>
+    <%= form_for post, url: group_post_path(post.group_id, post), method: :patch do |f| %>
+        <% if has_liked?(post, current_user) %>
+            <%= post.likes.size %> Likes
+            <%= f.check_box(:likes, {checked: has_liked?(post, current_user)}) %>
+            <%= f.submit "Unlike Post" %>
+        <% else %>
+            <%= post.likes.size %> Likes
+            <%= f.check_box :likes %>
+            <%= f.submit "Like Post" %>
+        <% end %>
+    <% end %>
+<% else %>
+    <%= post.likes.size %> Likes
+<% end %>
+<br>
+<% if creator?(post) == current_user %>
+    <%= button_to "Edit Post", edit_user_post_path(current_user, post.id), method: :get %>
+<% else %>
+    Comments: <br>
+    <%= render partial: "comments/comments", locals: {post_comments: post.comments} %>
+    <br>
+    <%= button_to "Add Comment", new_post_comment_path(post), method: :get %>
+    <br>
+<% end %>

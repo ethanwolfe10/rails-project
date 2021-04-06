@@ -26,6 +26,21 @@ class PostsController < ApplicationController
 
     def update
         @post = Post.find(params[:id])
+        #updating a posts likes 
+        binding.pry
+        if params[:commit] == "Unlike Post"
+            Like.find_by(user_id: current_user.id, post_id: params[:id]).destroy
+            redirect_to group_path(@post.group_id) and return
+        end
+        if params[:post][:likes]
+            if !Like.find_by(user_id: current_user.id, post_id: params[:id])
+                Like.create(user_id: current_user.id, post_id: params[:id])
+                redirect_to group_post_path(PostHelper.group?(params[:id]), params[:id])
+            else
+                flash[:alert] = "You've Already Liked this Post!"
+                redirect_to group_post_path(PostHelper.group?(params[:id]), params[:id])
+            end
+        end
         #updating a posts title and content
         if !params[:post][:title].blank? && !params[:post][:content].blank?
             if @post.title != params[:post][:title]
@@ -38,16 +53,8 @@ class PostsController < ApplicationController
         end
             
 
-        #updating a posts likes 
-        if params[:post][:likes]
-            if !Like.find_by(user_id: current_user.id, post_id: params[:id])
-                Like.create(user_id: current_user.id, post_id: params[:id])
-                redirect_to group_post_path(PostHelper.group?(params[:id]), params[:id])
-            else
-                flash[:alert] = "You've Already Liked this Post!"
-                redirect_to group_post_path(PostHelper.group?(params[:id]), params[:id])
-            end
-        end
+        
+        
     end
 
     private
